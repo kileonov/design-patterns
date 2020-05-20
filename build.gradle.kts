@@ -11,9 +11,6 @@ repositories {
 }
 
 subprojects {
-//    tasks.withType<Jar> {
-//        destinationDirectory.set(File("${project.buildDir}"))
-//    }
 
     apply(plugin = "java")
     apply(plugin = "kotlin")
@@ -38,6 +35,22 @@ subprojects {
 
     dependencies {
         implementation(kotlin("stdlib-jdk8"))
-        testCompile("junit", "junit", "4.12")
+        testImplementation("org.junit.jupiter", "junit-jupiter-api", "5.1.0")
+        testImplementation("org.junit.jupiter", "junit-jupiter-engine", "5.1.0")
     }
+
+    tasks.withType<Test> {
+        useJUnitPlatform()
+    }
+
+    tasks.withType<Jar> {
+        manifest {
+            attributes["Main-Class"] = "org.houseproject.MainKt"
+        }
+
+        from({
+           configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
+         })
+    }
+
 }
