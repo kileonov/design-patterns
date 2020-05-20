@@ -1,3 +1,3 @@
 rootProject.name = "design-patterns"
 
-include("factory-method", "singleton")
+include("factory-method", "singleton", "factory")
