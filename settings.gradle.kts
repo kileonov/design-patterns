@@ -1,3 +1,10 @@
 rootProject.name = "design-patterns"
 
-include("factory-method", "singleton", "factory", "facade", "builder")
+include(
+    *rootProject.projectDir.listFiles()
+        ?.filter { it.isDirectory }
+        ?.filter { !it.name.startsWith(".") && it.name != "build" }
+        ?.map { it.name }
+        ?.toTypedArray()
+        .orEmpty()
+)
